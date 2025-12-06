@@ -1,3 +1,5 @@
+/* src/App.css */
+
 /* 화면 전체 컨테이너 */
 .app-root {
   height: 100vh;
@@ -7,7 +9,8 @@
   background: #f5f5f5;
 }
 
-/* 상단: 방 정보 + 입장 + 화상 시작 */
+/* ───────────────── 상단 바 ───────────────── */
+
 .top-bar {
   padding: 8px 16px;
   border-bottom: 1px solid #ccc;
@@ -32,7 +35,7 @@
   border-radius: 4px;
   border: 1px solid #ccc;
   font-size: 0.85rem;
-  width: 90px; /* 이전에 줄여둔 폭 */
+  width: 90px;
 }
 
 .top-bar button {
@@ -50,7 +53,58 @@
   background: #3862af;
 }
 
-/* 🔊 마이크 버튼 (아이콘 + 토글 색상) */
+/* 나가기 버튼 */
+.top-bar .leave-btn {
+  background: #e74c3c;
+}
+
+.top-bar .leave-btn:hover {
+  background: #c0392b;
+}
+
+/* ───────────────── 오디오 컨트롤 공통 (스피커 + 마이크) ───────────────── */
+
+/* 8-1. 스피커/마이크 버튼 + 슬라이더 + 레벨바 묶음 */
+.audio-control-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 4px;
+}
+
+/* 마이크/스피커 볼륨 슬라이더 공통 */
+.top-bar .speaker-volume,
+.top-bar .mic-volume {
+  width: 70px;
+}
+
+/* 8-2. 레벨바 공통 스타일 */
+.level-bar {
+  width: 60px;
+  height: 6px;
+  border-radius: 3px;
+  background: #ddd;
+  overflow: hidden;
+}
+
+.level-bar .level-inner {
+  height: 100%;
+  width: 0%;
+  transition: width 0.15s linear;
+}
+
+/* 🔸 스피커 레벨바는 아예 숨김 */
+.level-bar.speaker-level {
+  display: none;
+}
+
+/* 🔸 마이크 레벨(주황색)만 유지 */
+.level-bar.mic-level .level-inner {
+  background: #f39c12;
+}
+
+/* ───────── 마이크 버튼 & 아이콘 ───────── */
+
 .top-bar .mic-btn {
   display: flex;
   align-items: center;
@@ -59,6 +113,9 @@
   width: 32px;
   height: 32px;
   background: #4a7bd4;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
 }
 
 .top-bar .mic-btn:hover {
@@ -86,7 +143,7 @@
   background: #fff;
 }
 
-/* 음소거 상태일 때 – 버튼 색 분홍 + 대각선 */
+/* 음소거 상태일 때 – 분홍 버튼 + 대각선 */
 .top-bar .mic-btn.muted {
   background: #ff6fa8;
 }
@@ -102,16 +159,82 @@
   transform: rotate(-45deg);
 }
 
-/* 🔴 나가기 버튼 빨간색 */
-.top-bar .leave-btn {
-  background: #e74c3c;
+/* ───────── 스피커 버튼 & 아이콘 ───────── */
+
+.top-bar .speaker-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  width: 32px;
+  height: 32px;
+  background: #555;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-.top-bar .leave-btn:hover {
-  background: #c0392b;
+.top-bar .speaker-btn:hover {
+  background: #444;
 }
 
-/* 메인 2컬럼 레이아웃 */
+/* 스피커 아이콘 (몸통 + 소리 파동) */
+.speaker-icon {
+  position: relative;
+  width: 16px;
+  height: 14px;
+}
+
+/* 몸통 */
+.speaker-icon::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 3px;
+  width: 7px;
+  height: 8px;
+  background: #fff;
+  border-radius: 1px;
+}
+
+/* 파동 */
+.speaker-icon::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 1px;
+  width: 9px;
+  height: 12px;
+  border-right: 2px solid #fff;
+  border-top: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+  border-radius: 50%;
+}
+
+/* 음소거 상태 – 분홍 + 대각선 */
+.top-bar .speaker-btn.muted {
+  background: #ff6fa8;
+}
+
+.top-bar .speaker-btn.muted .speaker-icon::before {
+  background: #fff;
+}
+
+/* 파동 제거 + 슬래시 추가 */
+.top-bar .speaker-btn.muted .speaker-icon::after {
+  content: "";
+  position: absolute;
+  left: -2px;
+  top: 6px;
+  width: 18px;
+  height: 2px;
+  background: #fff;
+  border: none;
+  transform: rotate(-45deg);
+}
+
+/* ───────────────── 메인 레이아웃 ───────────────── */
+
 .main-layout {
   flex: 1;
   display: flex;
@@ -127,15 +250,22 @@
   gap: 8px;
 }
 
-/* 상단 1:1 영상 스트립 */
+/* 상단 영상 스트립: 가로 한 줄 + 스크롤 */
 .video-strip {
   display: flex;
-  gap: 8px;
-  height: 100px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 100%;
+  padding: 8px 0;
+  column-gap: 0.8vw;
 }
 
+/* 각 참가자 비디오 타일 */
 .video-panel {
-  flex: 1;
+  flex: 0 0 calc(100% / 6);
+  max-width: calc(100% / 6);
+  height: clamp(60px, 9vh, 100px);
   background: #dcdcdc;
   border-radius: 6px;
   position: relative;
@@ -143,6 +273,26 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  /* 🔹 항상 같은 두께의 흰색 테두리 + 레이아웃 고정 */
+  border: 4px solid #ffffff;
+  box-sizing: border-box;
+}
+
+/* 🔊 말하는 사람: 테두리 색만 연두색으로 변경 (두께 그대로) */
+.video-panel.speaking {
+  border-color: #9cff9c;
+}
+
+/* 보드 필기 중인 사람 */
+.video-panel.boarding {
+  box-shadow: 0 0 0 3px #a0d8ff inset;
+}
+
+/* 둘 다인 경우 */
+.video-panel.speaking.boarding {
+  border-color: #9cff9c;
+  box-shadow: 0 0 0 3px #a0d8ff inset;
 }
 
 .video-panel video {
@@ -162,7 +312,17 @@
   border-radius: 4px;
 }
 
-/* 보드 영역 전체 */
+/* 개별 참가자 볼륨 슬라이더
+.remote-volume-slider {
+  position: absolute;
+  left: 50%;
+  bottom: 4px;
+  transform: translateX(-50%);
+  width: 80%;
+} */
+
+/* ───────────────── 보드(화면 공유 + 캔버스) ───────────────── */
+
 .board-wrapper {
   flex: 1;
   display: flex;
@@ -172,14 +332,12 @@
   background: #fff8dc;
 }
 
-/* 보드 상단 설명/제목 */
 .board-header {
   padding: 6px 10px;
   border-bottom: 1px solid #e0d6a6;
   font-size: 0.85rem;
 }
 
-/* 실제 그림/화면 공유 영역 */
 .board-body {
   flex: 1;
   padding: 10px;
@@ -188,7 +346,6 @@
   align-items: center;
 }
 
-/* 화면 공유 + 캔버스 오버레이 컨테이너 */
 .screen-share-container {
   position: relative;
   width: 848px;
@@ -199,7 +356,6 @@
   overflow: hidden;
 }
 
-/* 공유 화면 비디오 */
 .screen-video {
   width: 100%;
   height: 100%;
@@ -207,7 +363,6 @@
   background: #000;
 }
 
-/* 보드 캔버스 (화면 위에 겹쳐 그림) */
 .screen-canvas {
   position: absolute;
   left: 0;
@@ -216,17 +371,15 @@
   height: 100%;
 }
 
-/* 보드 필기 ON → 펜 커서 */
+/* 보드 필기/지우개 커서 */
 .pen-cursor {
   cursor: crosshair;
 }
 
-/* 지우개 ON → 지우개 커서 */
 .eraser-cursor {
   cursor: cell;
 }
 
-/* 지우개 미리보기 박스 */
 .eraser-preview {
   display: inline-block;
   margin-left: 4px;
@@ -279,7 +432,8 @@
   vertical-align: middle;
 }
 
-/* 오른쪽: 채팅 + 메모 */
+/* ───────────────── 오른쪽: 채팅 + 공유 메모 ───────────────── */
+
 .right-side {
   flex: 1.2;
   padding: 8px 16px 8px 8px;
@@ -302,7 +456,6 @@
   font-size: 0.9rem;
 }
 
-/* 채팅 화면 영역 */
 .chat-window {
   flex: 1;
   border: 1px solid #ccc;
@@ -311,13 +464,12 @@
   background: #ffffff;
   overflow-y: auto;
   font-size: 0.85rem;
-  margin-bottom: 0;   /* 입력창과 '바짝' 붙임 */
 }
 
 /* 입력창 + 버튼 묶음 */
 .chat-input-row {
   display: flex;
-  flex-direction: row;   /* 🔥 버튼을 오른쪽에 배치 */
+  flex-direction: row;
   gap: 8px;
   margin-top: 6px;
 }
@@ -334,33 +486,26 @@
   box-sizing: border-box;
 }
 
-/* 글자색 버튼 상위 div 제거 후 정리 */
-.chat-color-row {
-  display: none;   /* 🔥 완전 제거 (UI에 보이지 않음) */
-}
-
 /* 오른쪽 버튼 묶음 */
 .chat-buttons {
   display: flex;
   flex-direction: column;
-  width: 60px;   /* 🔥 버튼 폭 축소 */
+  width: 60px;
   gap: 6px;
 }
 
-/* 글자색 버튼 (작게) */
 .chat-color-picker {
   width: 100%;
-  height: 32px;    /* 🔥 높이 축소 */
+  height: 32px;
   padding: 0;
   border-radius: 4px;
   border: 1px solid #999;
   cursor: pointer;
 }
 
-/* 전송 버튼 (작게) */
 .chat-send-btn {
   width: 100%;
-  height: 32px;     /* 🔥 높이 축소 */
+  height: 32px;
   font-size: 0.8rem;
   border-radius: 4px;
   border: none;
@@ -373,12 +518,19 @@
   background: #3862af;
 }
 
+/* 시스템 메시지 스타일 */
+.chat-message.system {
+  color: #777;
+  font-style: italic;
+}
 
-/* 공유 메모 */
+/* 공유 메모 (리치 텍스트) */
 .notes-panel {
   flex: 1;
   display: flex;
   flex-direction: column;
+  /* 🔽 추가: 안쪽 요소가 스크롤 될 수 있도록 */
+  min-height: 0;
 }
 
 .notes-title {
@@ -387,12 +539,58 @@
   margin-bottom: 4px;
 }
 
-.notes-panel textarea {
+.notes-editor {
   flex: 1;
+  /* 🔽 기존 min-height는 없애거나 0으로 변경 */
+  /* min-height: 80px;  <= 있으면 지우거나 주석 처리 */
+  min-height: 0;
   border-radius: 6px;
   border: 1px solid #ccc;
   padding: 6px;
   font-size: 0.85rem;
-  resize: vertical;
-  overflow: auto;
+  background: #ffffff;
+  /* 🔽 세로 스크롤은 이 div 안에서만 */
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* 포맷 툴바 */
+.notes-toolbar {
+  margin-top: 4px;
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.notes-toolbar button {
+  padding: 2px 6px;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  border: 1px solid #bbb;
+  background: #f0f0f0;
+  cursor: pointer;
+}
+
+.notes-toolbar button:hover {
+  background: #e5e5e5;
+}
+
+.notes-toolbar button.active {
+  background-color: #ffcc66;   /* 보드 필기 ON 과 같은 배경색 */
+  border-color: #e0a944;       /* 보드 필기 ON 과 같은 테두리 색 */
+  color: #333;
+}
+
+.notes-size-label {
+  font-size: 0.8rem; /* 색상 라벨과 동일 */
+  display: flex;
+  align-items: center;
+  margin-left: 4px;
+}
+
+.notes-color-label input[type="color"] {
+  width: 24px;
+  height: 22px;
+  padding: 0;
+  border: none;
 }
