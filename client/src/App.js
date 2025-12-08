@@ -1,3 +1,5 @@
+// src/App.js
+
 import React, { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 import "./App.css";
@@ -15,8 +17,10 @@ function App() {
   const [username, setUsername] = useState(
     "user-" + Math.floor(Math.random() * 1000)
   );
+
   const [isJoined, setIsJoined] = useState(false);
-  const [isMuted, setIsMuted] = useState(false); // 🔊 음소거 상태
+  // 음소거 상태
+  const [isMuted, setIsMuted] = useState(false);
 
   const socketRef = useRef(null);
   const pcRef = useRef(null);
@@ -207,7 +211,7 @@ function App() {
     socketRef.current.emit("webrtc-offer", { roomId, sdp: offer });
   };
 
-  // 🔊 5-1) 음소거 토글
+  // 5-1) 음소거 토글
   const toggleMute = () => {
     if (!localStreamRef.current) {
       alert("먼저 화상 시작을 눌러주세요.");
@@ -429,7 +433,7 @@ function App() {
     <div className="app-root">
       {/* 상단 바 */}
       <div className="top-bar">
-        <span className="top-bar-title">WebRTC 화상 + 화면 공유</span>
+        <span className="top-bar-title">WebRTC 1대1 (ver1.1)</span>
 
         <label>
           방 ID:
@@ -566,7 +570,7 @@ function App() {
         {/* 오른쪽: 채팅 + 공유 메모 */}
         <div className="right-side">
           <div className="chat-panel">
-            <div className="chat-title">채팅 화면 창</div>
+            <div className="chat-title">채팅 화면</div>
 
             <div className="chat-window">
               {messages.map((m, i) => (

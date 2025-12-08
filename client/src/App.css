@@ -1,3 +1,5 @@
+/* src/App.css */
+
 /* 화면 전체 컨테이너 */
 .app-root {
   height: 100vh;
@@ -50,7 +52,7 @@
   background: #3862af;
 }
 
-/* 🔊 마이크 버튼 (아이콘 + 토글 색상) */
+/* 마이크 버튼 (아이콘 + 토글 색상) */
 .top-bar .mic-btn {
   display: flex;
   align-items: center;
@@ -102,7 +104,7 @@
   transform: rotate(-45deg);
 }
 
-/* 🔴 나가기 버튼 빨간색 */
+/* 나가기 버튼 빨간색 */
 .top-bar .leave-btn {
   background: #e74c3c;
 }
@@ -311,13 +313,13 @@
   background: #ffffff;
   overflow-y: auto;
   font-size: 0.85rem;
-  margin-bottom: 0;   /* 입력창과 '바짝' 붙임 */
+  margin-bottom: 0; /* 입력창과 '바짝' 붙임 */
 }
 
 /* 입력창 + 버튼 묶음 */
 .chat-input-row {
   display: flex;
-  flex-direction: row;   /* 🔥 버튼을 오른쪽에 배치 */
+  flex-direction: row; /* 버튼을 오른쪽에 배치 */
   gap: 8px;
   margin-top: 6px;
 }
@@ -336,21 +338,21 @@
 
 /* 글자색 버튼 상위 div 제거 후 정리 */
 .chat-color-row {
-  display: none;   /* 🔥 완전 제거 (UI에 보이지 않음) */
+  display: none; /* 완전 제거 (UI에 보이지 않음) */
 }
 
 /* 오른쪽 버튼 묶음 */
 .chat-buttons {
   display: flex;
   flex-direction: column;
-  width: 60px;   /* 🔥 버튼 폭 축소 */
+  width: 60px; /* 버튼 폭 축소 */
   gap: 6px;
 }
 
 /* 글자색 버튼 (작게) */
 .chat-color-picker {
   width: 100%;
-  height: 32px;    /* 🔥 높이 축소 */
+  height: 32px; /* 높이 축소 */
   padding: 0;
   border-radius: 4px;
   border: 1px solid #999;
@@ -360,7 +362,7 @@
 /* 전송 버튼 (작게) */
 .chat-send-btn {
   width: 100%;
-  height: 32px;     /* 🔥 높이 축소 */
+  height: 32px; /* 높이 축소 */
   font-size: 0.8rem;
   border-radius: 4px;
   border: none;
@@ -372,7 +374,6 @@
 .chat-send-btn:hover {
   background: #3862af;
 }
-
 
 /* 공유 메모 */
 .notes-panel {
