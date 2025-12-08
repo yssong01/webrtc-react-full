@@ -19,7 +19,7 @@ function App() {
   );
 
   const [isJoined, setIsJoined] = useState(false);
-  // 🔊 음소거 상태
+  // 음소거 상태
   const [isMuted, setIsMuted] = useState(false);
 
   const socketRef = useRef(null);
@@ -211,7 +211,7 @@ function App() {
     socketRef.current.emit("webrtc-offer", { roomId, sdp: offer });
   };
 
-  // 🔊 5-1) 음소거 토글
+  // 5-1) 음소거 토글
   const toggleMute = () => {
     if (!localStreamRef.current) {
       alert("먼저 화상 시작을 눌러주세요.");
@@ -454,7 +454,7 @@ function App() {
 
         <button onClick={handleCallStart}>화상 시작</button>
 
-        {/* 🔊 마이크 아이콘 버튼 */}
+        {/* 마이크 아이콘 버튼 */}
         <button
           className={`mic-btn ${isMuted ? "muted" : ""}`}
           onClick={toggleMute}
@@ -466,7 +466,7 @@ function App() {
         <button onClick={handleShareScreen}>화면 공유</button>
         <button onClick={handleStopShare}>공유 종료</button>
 
-        {/* 🔴 나가기 (빨간색) */}
+        {/* 나가기 (빨간색) */}
         <button className="leave-btn" onClick={handleHangup}>
           나가기
         </button>
