@@ -1,10 +1,10 @@
 // script src/App.test.js
 
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render, screen } from "@testing-library/react";
+import App from "./App";
 
-test('renders learn react link', () => {
+test("renders webrtc title", () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const titleElement = screen.getByText(/WebRTC 1:N 화상/i);
+  expect(titleElement).toBeInTheDocument();
 });
